@@ -22,11 +22,8 @@ class Header extends React.Component {
         overflow: 'hidden',
         maxHeight: 57
       },
-      menuButton: {
-        marginLeft: 10
-      },
-      iconsRightContainer: {
-        marginLeft: 20
+      title: {
+        textAlign: 'center'
       }
     };
 
@@ -35,13 +32,9 @@ class Header extends React.Component {
             <AppBar
               style={{...styles, ...style.appBar}}
               title={
-                <SearchBox />
+                <div style={style.title}>Pivot Presenter Tracker</div>
               }
-              iconElementLeft={
-                  <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
-                    <Menu color={white} />
-                  </IconButton>
-              }
+              showMenuIconButton={false}
               iconElementRight={
                 <div style={style.iconsRightContainer}>
                   <IconMenu color={white}
@@ -54,15 +47,6 @@ class Header extends React.Component {
                     <MenuItem key={1} primaryText="Application 1"/>
                     <MenuItem key={2} primaryText="Application 2"/>
                     <MenuItem key={3} primaryText="Application 3"/>
-                  </IconMenu>
-                  <IconMenu color={white}
-                            iconButtonElement={
-                              <IconButton><MoreVertIcon color={white}/></IconButton>
-                            }
-                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                  >
-                    <MenuItem primaryText="Sign out" containerElement={<Link to="/login"/>}/>
                   </IconMenu>
                 </div>
               }

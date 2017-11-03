@@ -1,18 +1,27 @@
 import React, {PropTypes} from 'react';
 import Paper from 'material-ui/Paper';
+import SelectField from 'material-ui/SelectField';
+import RaisedButton from 'material-ui/RaisedButton';
+import MenuItem from 'material-ui/MenuItem';
 import {white, grey800} from 'material-ui/styles/colors';
 import {typography} from 'material-ui/styles';
 
 class InfoBox extends React.Component {
 
+  constructor(props){
+      super(props);
+      this.state = {
+          newPresenter:null
+      };
+  }
+
   render() {
-    const {color, title, value, Icon} = this.props;
+    const {color, Icon, activity, pivots, saveAction} = this.props;
 
     const styles = {
       content: {
         padding: '5px 10px',
-        marginLeft: 90,
-        height: 80
+        marginLeft: 90
       },
       number: {
         display: 'block',
@@ -41,6 +50,27 @@ class InfoBox extends React.Component {
       }
     };
 
+    var pivotsList = [];
+    var pivotSelect;
+
+    if (pivots.length >0){
+      pivotsList = pivots.map(function(pivot){
+                          return <MenuItem
+                                    key={pivot.id}
+                                    value={pivot}
+                                    primaryText={pivot.userName}
+                                  />;
+                        });
+      pivotSelect = <SelectField fullWidth={true}
+                                 value={this.state.newPresenter}
+                                 onChange={(event, index, value) => {
+                                   this.setState({newPresenter: value});
+                                 }}
+                    >
+                      {pivotsList}
+                    </SelectField>;
+    }
+
     return (
       <Paper>
         <span style={styles.iconSpan}>
@@ -50,8 +80,12 @@ class InfoBox extends React.Component {
         </span>
 
         <div style={styles.content}>
-          <span style={styles.text}>{title}</span>
-          <span style={styles.number}>{value}</span>
+          <span style={styles.text}>{activity.presentation}</span>
+          <span style={styles.number}>{activity.lastPresentedPivot? activity.lastPresentedPivot.userName: null}</span>
+          {pivotSelect}
+          <div>
+            <RaisedButton label="Save" fullWidth={true} onClick={(event)=>saveAction(this.state.newPresenter, activity)}/>
+          </div>
         </div>
       </Paper>
       );
@@ -62,7 +96,9 @@ InfoBox.propTypes = {
   Icon: PropTypes.any, // eslint-disable-line
   color: PropTypes.string,
   title: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  pivots: PropTypes.array,
+  saveAction: PropTypes.any
 };
 
 export default InfoBox;

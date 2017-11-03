@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import {connect} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Header from '../components/Header';
-import LeftDrawer from '../components/LeftDrawer';
+import Header from '../../components/Header';
+import LeftDrawer from '../../components/LeftDrawer';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
-import ThemeDefault from '../theme-default';
-import Data from '../data';
+import ThemeDefault from '../../theme-default';
+import Data from '../../data';
 
 class App extends React.Component {
 
@@ -33,7 +34,7 @@ class App extends React.Component {
 
     const styles = {
       header: {
-        paddingLeft: navDrawerOpen ? paddingLeftDrawerOpen : 0
+        paddingLeft: 0
       },
       container: {
         margin: '80px 20px 20px 15px',
@@ -46,10 +47,6 @@ class App extends React.Component {
         <div>
           <Header styles={styles.header}
                   handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
-
-            <LeftDrawer navDrawerOpen={navDrawerOpen}
-                        menus={Data.menus}
-                        username="User Admin"/>
 
             <div style={styles.container}>
               {this.props.children}
@@ -65,4 +62,4 @@ App.propTypes = {
   width: PropTypes.number
 };
 
-export default withWidth()(App);
+export default connect()(withWidth()(App));
